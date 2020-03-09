@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Diagnostics;
+using System.IO;
 
 namespace CMP1124MAlgorithmsAssignment1
 {
@@ -7,11 +12,14 @@ namespace CMP1124MAlgorithmsAssignment1
         static void Main(string[] args)
         {
 
+            string[] Net1 = File.ReadAllLines(@"C:\Users\Billy\source\repos\billyedwards3017\CMP1124MAlgorithmsAssignment1");
 
+            foreach (string log in Net1)
+            {
+                Console.WriteLine(log);
+                Console.ReadKey();
+            }
 
-            //int[] net1 = new int[] {}
-            Console.WriteLine("Hello World!");
-            //trying to add this to the repo
         }
     }
 }
