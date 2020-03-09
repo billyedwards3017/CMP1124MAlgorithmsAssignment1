@@ -23,7 +23,7 @@ namespace CMP1124MAlgorithmsAssignment1
             {
                 if (ans == 1)
                 {
-                     Net = File.ReadAllLines(@"C:\Users\Billy\source\repos\billyedwards3017\CMP1124MAlgorithmsAssignment1\Net_1_256.txt");
+                     Net = File.ReadAllLines(@"C:\Users\HP\source\repos\billyedwards3017\CMP1124MAlgorithmsAssignment1\Net_1_256.txt");
                 }
                 else if (ans == 2)
                 {
@@ -45,18 +45,31 @@ namespace CMP1124MAlgorithmsAssignment1
 
             int[] NetInt = Array.ConvertAll(Net, int.Parse);
             //This line converts the string array of the inputted text file into a integer array of the same data for the sorting algorithm
-            int[] SortedNetInt = new int[255];
-                QuickSort(NetInt);
+
+            QuickSort(ref NetInt);
             //This line is calling the Quick Sort algorithm on the integer array.
+
+            int[] DescNetInt = new int[256]; 
+            CreateDescendingList(NetInt, ref DescNetInt);
+            //This line creates a new array which shows the sorted array in descending order 
+
+            DisplayValues(NetInt, DescNetInt);
+            //This line calls a method which displays every 10th digit of both the ascending and descending arrays 
+
+
+
+
+
+
+
         }
 
-        public static void QuickSort(int[] data)
+        public static void QuickSort(ref int[] data)
         {
-            QuickSort(data, 0, data.Length - 1);
-            Console.WriteLine(data[0]);
+            QuickSort(ref data, 0, data.Length - 1);
         }
 
-        public static void QuickSort(int [] data, int left, int right)
+        public static void QuickSort(ref int[] data, int left, int right)
         {
             int i = left;
             int j = right;
@@ -80,12 +93,71 @@ namespace CMP1124MAlgorithmsAssignment1
 
             if (left < j)
             {
-                QuickSort(data, left, j);
+                QuickSort(ref data, left, j);
             }
             if (i < right)
             {
-                QuickSort(data, i, right);
+                QuickSort(ref data, i, right);
+            }
+
+           
+        }
+        public static void CreateDescendingList(int[] array, ref int[] OutputArray)
+        {
+
+            for (int x = 0; x < array.Length; x++)
+            {
+                OutputArray[x] = array[((array.Length-1) - x)];
             }
         }
+
+        public static void DisplayValues(int[] ascArray, int[] descArray)
+        {
+
+            Console.WriteLine("The log sorted in ascending order, displaying every tenth item");
+            for (int x = 0; x < ascArray.Length; x += 10)
+            {
+                Console.WriteLine(ascArray[x]);
+            }
+            Console.WriteLine("");
+
+            Console.WriteLine("The log sorted in descending order, displaying every tenth item");
+            for (int x = 0; x < descArray.Length; x += 10)
+            {
+                Console.WriteLine(descArray[x]);
+            }
+
+        }
+
+        public int LinearSearch(int[] array, int ItemSearchedFor)
+        {
+            bool found = false;
+            int currentValue = 0;
+            int MaxValue = array.Length;
+            do
+            {
+                if (array[currentValue] == ItemSearchedFor)
+                {
+                    found = true;
+
+                }
+                else
+                {
+                    currentValue += 1;
+                }
+
+            } while (!(found == true || currentValue>MaxValue));
+
+            if (found == true)
+            {
+                return currentValue;
+
+            }else
+            {
+                return -1;
+            }
+
+        }
+
     }
 }
