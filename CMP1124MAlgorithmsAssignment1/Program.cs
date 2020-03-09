@@ -56,8 +56,11 @@ namespace CMP1124MAlgorithmsAssignment1
             DisplayValues(NetInt, DescNetInt);
             //This line calls a method which displays every 10th digit of both the ascending and descending arrays 
 
+            List<int> foundPositions = new List<int>();
 
-
+            Console.WriteLine("Enter a value you would like to find in the array");
+            int SearchValue = Convert.ToInt32(Console.ReadLine());
+            LinearSearch(NetInt, SearchValue, ref foundPositions);
 
 
 
@@ -128,33 +131,44 @@ namespace CMP1124MAlgorithmsAssignment1
             }
 
         }
+        
 
-        public int LinearSearch(int[] array, int ItemSearchedFor)
+        
+
+        public static void LinearSearch(int[] array, int ItemSearchedFor, ref List<int> foundPositions)
         {
-            bool found = false;
+            
             int currentValue = 0;
             int MaxValue = array.Length;
+ 
+            int NoFound = 0;
             do
             {
                 if (array[currentValue] == ItemSearchedFor)
                 {
-                    found = true;
-
+                    foundPositions.Add(currentValue);
+                    NoFound++;
+                    currentValue += 1;
                 }
                 else
                 {
                     currentValue += 1;
                 }
 
-            } while (!(found == true || currentValue>MaxValue));
+            } while (currentValue<MaxValue);
 
-            if (found == true)
+            if (foundPositions.Count > 0)
             {
-                return currentValue;
+                Console.WriteLine("Input integer has been found in the list at the following positions;");
+               for (int x = 0; x < foundPositions.Count; x++)
+                {
+                    Console.WriteLine(foundPositions[x]);
+                }
 
-            }else
+            }
+            else
             {
-                return -1;
+                Console.WriteLine("Input integer has not been found in the list");
             }
 
         }
