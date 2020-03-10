@@ -60,7 +60,29 @@ namespace CMP1124MAlgorithmsAssignment1
 
             Console.WriteLine("Enter a value you would like to find in the array");
             int SearchValue = Convert.ToInt32(Console.ReadLine());
-            LinearSearch(NetInt, SearchValue, ref foundPositions);
+
+            Console.WriteLine("would you like to use linear search (1) or binary search (2)?");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            if (choice == 1)
+            {
+                LinearSearch(NetInt, SearchValue, ref foundPositions);
+            }
+            else if (choice == 2)
+            {
+                bool found = false;
+               int closest = RecursiveBinary(NetInt, SearchValue, 0, NetInt.Length - 1,((NetInt.Length-1)/2) , ref found, ref foundPositions);
+
+                if (foundPositions.Count > 0) {
+                    Console.WriteLine("Input integer has been found in the list at the following positions;");
+                    for (int x = 0; x < foundPositions.Count; x++)
+                    {
+                        Console.WriteLine(foundPositions[x]);
+                    }
+                } else
+                {
+                    Console.WriteLine($"Value not found, closest value is {closest}");
+                }
+            }
 
 
 
@@ -191,5 +213,56 @@ namespace CMP1124MAlgorithmsAssignment1
 
         }
 
+        public static int RecursiveBinary(int[] array, int ItemSearchedFor, int min, int max, int midpoint, ref bool found, ref List <int> FoundPositions)
+        {
+            if (min > max)
+            {
+                found = false;
+                return midpoint;
+            }
+            else
+            {
+                midpoint = (max + min) / 2;
+
+                if (ItemSearchedFor == array[midpoint])
+                {
+                    found = true;
+                    FoundPositions.Add(midpoint);
+                    CheckLeft(array, midpoint, ref FoundPositions);
+                    CheckRight(array, midpoint, ref FoundPositions);
+                    return midpoint;
+                }
+                else if (ItemSearchedFor < array[midpoint])
+                {
+                    return RecursiveBinary(array, ItemSearchedFor, min, midpoint - 1, ((min+(midpoint - 1))/2), ref found, ref FoundPositions);
+                }
+                else
+                {
+                    return RecursiveBinary(array, ItemSearchedFor, midpoint + 1, max, (((midpoint + 1) + max)/2), ref found, ref FoundPositions);
+                }
+            }
+
+
+        }
+
+        public static int CheckLeft(int[] array, int midpoint, ref List<int> FoundPositions)
+        {
+            if (array[midpoint] == array[midpoint - 1])
+            {
+                FoundPositions.Add(midpoint - 1);
+                CheckLeft(array, (midpoint - 1), ref FoundPositions);
+            }            
+                return -1;
+        }
+
+        public static int CheckRight(int[] array, int midpoint, ref List<int> FoundPositions)
+        {
+            if (array[midpoint] == array[midpoint + 1])
+            {
+                FoundPositions.Add(midpoint + 1);
+                CheckRight(array, (midpoint + 1), ref FoundPositions);
+            }
+                return -1;
+        }
     }
 }
