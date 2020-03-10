@@ -136,12 +136,14 @@ namespace CMP1124MAlgorithmsAssignment1
         
 
         public static void LinearSearch(int[] array, int ItemSearchedFor, ref List<int> foundPositions)
-        {
-            
+        {          
             int currentValue = 0;
             int MaxValue = array.Length;
- 
+            bool MoreOrLess = false;
+            int closestValue = 0;
+            int closestLocation = 0;
             int NoFound = 0;
+
             do
             {
                 if (array[currentValue] == ItemSearchedFor)
@@ -152,6 +154,21 @@ namespace CMP1124MAlgorithmsAssignment1
                 }
                 else
                 {
+                    if (MoreOrLess == false && array[currentValue] > ItemSearchedFor)
+                    {
+                        MoreOrLess = true;
+
+                        if ((array[currentValue] - ItemSearchedFor) < (ItemSearchedFor - array[(currentValue-1)]))
+                        {
+                            closestValue = array[currentValue];
+                            closestLocation = currentValue;
+                        }
+                        else
+                        {
+                            closestValue = array[(currentValue - 1)];
+                            closestLocation = (currentValue - 1);
+                        }
+                    }
                     currentValue += 1;
                 }
 
@@ -169,6 +186,7 @@ namespace CMP1124MAlgorithmsAssignment1
             else
             {
                 Console.WriteLine("Input integer has not been found in the list");
+                Console.WriteLine($"Your closest value is {closestValue} and is in location {closestLocation}");                    
             }
 
         }
