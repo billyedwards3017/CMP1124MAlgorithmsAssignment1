@@ -12,8 +12,8 @@ namespace CMP1124MAlgorithmsAssignment1
         static void Main(string[] args)
         {
 
-           
-            
+
+
             Console.WriteLine("Would you like to work with log 1 (1), log 2 (2) or log 3 (3)");
 
             int ans = Convert.ToInt32(Console.ReadLine());
@@ -86,9 +86,9 @@ namespace CMP1124MAlgorithmsAssignment1
 
             int sortCount = 0;
 
-            Console.WriteLine("Would you like to use quicksort (1) or bubblesort (2)");
+            Console.WriteLine("Would you like to use Quick Sort (1), Bubble Sort (2), Insertion Sort (3) or Selection Sort");
             int sortChoice = Convert.ToInt32(Console.ReadLine());
-            //This segment lets the uer choose whether they want to use the quick sort o rth ebubble sort.
+            //This segment lets the uer choose whether they want to use the sorting method you want.
             if (sortChoice == 1)
             {
                 QuickSort(ref NetInt, ref sortCount);
@@ -98,11 +98,16 @@ namespace CMP1124MAlgorithmsAssignment1
 
                 BubbleSort(ref NetInt, ref sortCount);
             }
+            else if (sortChoice == 3)
+            {
+                InsertionSort(ref NetInt, ref sortCount);
+            }
+            else if (sortChoice == 4)
+            {
+                SelectionSort(ref NetInt, ref sortCount);
+            }
 
-            QuickSort(ref NetInt, ref sortCount);
-            //This line is calling the Quick Sort algorithm on the integer array.
-
-            int[] DescNetInt = new int[255]; 
+            int[] DescNetInt = new int[255];
             if (vAns == 2)
             {
                 Array.Resize(ref DescNetInt, 2047);
@@ -110,21 +115,21 @@ namespace CMP1124MAlgorithmsAssignment1
             CreateDescendingList(NetInt, ref DescNetInt);
             //This line creates a new array which shows the sorted array in descending order 
 
-            DisplayValues(NetInt, DescNetInt,vAns);
+            DisplayValues(NetInt, DescNetInt, vAns);
             //This line calls a method which displays every 10th digit of both the ascending and descending arrays 
 
             Console.WriteLine($"This sort took {sortCount} steps");
             //This gives the time complexity of the chosen sorting program
-            
-           
-          
+
+
+
             Console.WriteLine("Enter a value you would like to find in the array");
             int SearchValue = Convert.ToInt32(Console.ReadLine());
             //This lets you enter a value to search for in the log
             int searchCount = 0;
             List<int> foundPositions = new List<int>();
             //this list will hold all the positions that contain the number being searched for.
-            Console.WriteLine("would you like to use linear search (1) or binary search (2)?");
+            Console.WriteLine("would you like to use Linear Search (1) or Binary Search (2)?");
             int choice = Convert.ToInt32(Console.ReadLine());
             if (choice == 1)
             {
@@ -134,19 +139,21 @@ namespace CMP1124MAlgorithmsAssignment1
             else if (choice == 2)
             {
                 bool found = false;
-               int closest = RecursiveBinary(NetInt, SearchValue, 0, NetInt.Length - 1,((NetInt.Length-1)/2) , ref found, ref foundPositions, ref searchCount);
+                int closest = RecursiveBinary(NetInt, SearchValue, 0, NetInt.Length - 1, ((NetInt.Length - 1) / 2), ref found, ref foundPositions, ref searchCount);
                 //this calls the binary search method and displays the values
-                if (foundPositions.Count > 0) {
+                if (foundPositions.Count > 0)
+                {
                     Console.WriteLine("(Keep in mind the list starts at 0)");
                     Console.WriteLine("Input integer has been found in the list at the following positions;");
                     for (int x = 0; x < foundPositions.Count; x++)
                     {
                         Console.WriteLine(foundPositions[x]);
                     }
-                } else
+                }
+                else
                 {
                     Console.WriteLine("(Keep in mind the list starts at 0)");
-                    Console.WriteLine($"Value not found, closest value is {closest}");
+                    Console.WriteLine($"Value not found, closest value is {NetInt[closest]} at position {closest}");
                 }
             }
             Console.WriteLine($"The search algorithm took {searchCount} amount of steps");
@@ -166,7 +173,7 @@ namespace CMP1124MAlgorithmsAssignment1
         {
             int i = left;
             int j = right;
-            int pivot = data[(left + right)/2];
+            int pivot = data[(left + right) / 2];
             int temp;
             //declaring the required variables for this method
             //pivot is declared as the midpoint 
@@ -182,7 +189,7 @@ namespace CMP1124MAlgorithmsAssignment1
                 while ((pivot < data[j]) && (j > left))
                 {
                     j--;
-                        // this does the same for the rightmost value
+                    // this does the same for the rightmost value
                 }
 
                 if (i <= j)
@@ -205,14 +212,14 @@ namespace CMP1124MAlgorithmsAssignment1
                 QuickSort(ref data, i, right, ref count);
             }
             //recursively calls the quicksort again. divide and conquer technique
-           
+
         }
         public static void CreateDescendingList(int[] array, ref int[] OutputArray)
         {
 
-            for (int x = 0; x < array.Length-1; x++)
+            for (int x = 0; x < array.Length - 1; x++)
             {
-                OutputArray[x] = array[((array.Length-1) - x)];
+                OutputArray[x] = array[((array.Length - 1) - x)];
             }
             //this adds to the recently created array every element in the original array but in a reverse order 
         }
@@ -233,7 +240,8 @@ namespace CMP1124MAlgorithmsAssignment1
                 {
                     Console.WriteLine(descArray[x]);
                 }
-            } else if (vAns == 2)
+            }
+            else if (vAns == 2)
             {
                 Console.WriteLine("The log sorted in ascending order, displaying every 50th item");
                 for (int x = 0; x < ascArray.Length; x += 50)
@@ -251,12 +259,12 @@ namespace CMP1124MAlgorithmsAssignment1
             }
             //this displays every 10th value of the ascending and descending arrays if using the smaller files, or every 50th value if using the larger files.
         }
-        
 
-        
+
+
 
         public static void LinearSearch(int[] array, int ItemSearchedFor, ref List<int> foundPositions, ref int count)
-        {          
+        {
             int currentValue = 0;
             int MaxValue = array.Length;
             bool MoreOrLess = false;
@@ -280,11 +288,11 @@ namespace CMP1124MAlgorithmsAssignment1
                     {
                         MoreOrLess = true;
                         //this checks if the value has been passed yet.
-                        if ((array[currentValue] - ItemSearchedFor) < (ItemSearchedFor - array[(currentValue-1)]))
+                        if ((array[currentValue] - ItemSearchedFor) < (ItemSearchedFor - array[(currentValue - 1)]))
                         {
                             closestValue = array[currentValue];
                             closestLocation = currentValue;
-                            
+
                         }
                         else
                         {
@@ -296,17 +304,17 @@ namespace CMP1124MAlgorithmsAssignment1
                     currentValue += 1;
                 }
 
-            } while (currentValue<MaxValue);
+            } while (currentValue < MaxValue);
 
             if (foundPositions.Count > 0)
             {
                 Console.WriteLine("(Keep in mind the list starts at 0)");
                 Console.WriteLine("Input integer has been found in the list at the following positions;");
-               for (int x = 0; x < foundPositions.Count; x++)
+                for (int x = 0; x < foundPositions.Count; x++)
                 {
                     Console.WriteLine(foundPositions[x]);
                 }
-               //this lists the positions of the searched value
+                //this lists the positions of the searched value
             }
             else
             {
@@ -318,7 +326,7 @@ namespace CMP1124MAlgorithmsAssignment1
 
         }
 
-        public static int RecursiveBinary(int[] array, int ItemSearchedFor, int min, int max, int midpoint, ref bool found, ref List <int> FoundPositions, ref int count)
+        public static int RecursiveBinary(int[] array, int ItemSearchedFor, int min, int max, int midpoint, ref bool found, ref List<int> FoundPositions, ref int count)
         {
             count++;
             //ticks the counter
@@ -343,14 +351,14 @@ namespace CMP1124MAlgorithmsAssignment1
                 }
                 else if (ItemSearchedFor < array[midpoint])
                 {
-                    return RecursiveBinary(array, ItemSearchedFor, min, midpoint - 1, ((min+(midpoint - 1))/2), ref found, ref FoundPositions, ref count);
+                    return RecursiveBinary(array, ItemSearchedFor, min, midpoint - 1, ((min + (midpoint - 1)) / 2), ref found, ref FoundPositions, ref count);
                     //this recursively calls the method with the max value being shifted down to the value below the midpoint, as the value being searched fo rhas to be in the lower half.
                 }
                 else
                 {
-                    return RecursiveBinary(array, ItemSearchedFor, midpoint + 1, max, (((midpoint + 1) + max)/2), ref found, ref FoundPositions, ref count);
+                    return RecursiveBinary(array, ItemSearchedFor, midpoint + 1, max, (((midpoint + 1) + max) / 2), ref found, ref FoundPositions, ref count);
                     //this recursively calls the method with the max value being shifted down to the value below the midpoint, as the value being searched fo rhas to be in the lower half.
-                
+
                 }
             }
 
@@ -363,8 +371,8 @@ namespace CMP1124MAlgorithmsAssignment1
             {
                 FoundPositions.Add(midpoint - 1);
                 CheckLeft(array, (midpoint - 1), ref FoundPositions);
-            }            
-                return -1;
+            }
+            return -1;
             //this method checks the values to the left of the found variable in the binary search to see if the found value has multiple elements in the array to the left of the selected array
         }
 
@@ -375,21 +383,21 @@ namespace CMP1124MAlgorithmsAssignment1
                 FoundPositions.Add(midpoint + 1);
                 CheckRight(array, (midpoint + 1), ref FoundPositions);
             }
-                return -1;
+            return -1;
             //this method checks the values to the right of the found variable in the binary search to see if the found value has multiple elements in the array to the right of the selected array 
         }
 
         public static void BubbleSort(ref int[] array, ref int count)
         {
             int temp;
-            for (int x = 0; x < array.Length-1; x++)
+            for (int x = 0; x < array.Length - 1; x++)
             {
                 //the following code will iterate for every value in the array
                 for (int y = 0; y < array.Length - 1; y++)
                 {
                     //the code will iterate through each value
-                    count++; 
-                    if (array[y] > array[y+1])
+                    count++;
+                    if (array[y] > array[y + 1])
                     {
                         temp = array[y + 1];
                         array[y + 1] = array[y];
@@ -399,6 +407,53 @@ namespace CMP1124MAlgorithmsAssignment1
                 }
             }
 
+        }
+
+        public static void InsertionSort(ref int[] array, ref int count)
+        {
+
+            for (int x = 1; x < array.Length; x++)
+            {
+                int key = array[x];
+                int y = x - 1;
+                //this declares required variables
+
+                while (y >= 0 && array[y] > key)
+                {
+                    count++;
+                    array[y + 1] = array[y];
+                    y = y - 1;
+                    //this moves the selected variable down the array if the selected variable is less than the ones behind it
+                }
+                array[y + 1] = key;
+            }                      
+        }
+
+        public static void SelectionSort(ref int[] array, ref int count)
+        {
+           for (int x = 0; x < array.Length - 1; x++)
+            {
+                int min = x;
+                for (int y = 0; y < array.Length - 1; y++)
+                {
+                    count++;
+                    if (array[y] > array[min])
+                    {
+                        min = y;
+                        SwapSelection(ref array[x], ref array[min]);
+                        //checks to see if the value selected is larger than the currently smallest value, if it is, moves the minimum to this new value then calls the swapping method
+                    }
+                }
+            }
+
+        }
+
+        public static void SwapSelection(ref int i, ref int j)
+        {
+            int temp = i;
+            i = j;
+            j = temp;
+            //this submethod does the swapping function for the selection swap method
         }
     }
 }
