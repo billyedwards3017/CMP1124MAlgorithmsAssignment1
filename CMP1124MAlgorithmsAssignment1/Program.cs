@@ -86,7 +86,7 @@ namespace CMP1124MAlgorithmsAssignment1
 
             int sortCount = 0;
 
-            Console.WriteLine("Would you like to use Quick Sort (1), Bubble Sort (2), Insertion Sort (3) or Selection Sort");
+            Console.WriteLine("Would you like to use Quick Sort (1), Bubble Sort (2), Insertion Sort (3) or Selection Sort (4)");
             int sortChoice = Convert.ToInt32(Console.ReadLine());
             //This segment lets the uer choose whether they want to use the sorting method you want.
             if (sortChoice == 1)
@@ -179,7 +179,7 @@ namespace CMP1124MAlgorithmsAssignment1
             //pivot is declared as the midpoint 
             do
             {
-                count++;
+                
 
                 while ((data[i] < pivot) && (i < right))
                 {
@@ -199,8 +199,10 @@ namespace CMP1124MAlgorithmsAssignment1
                     data[j] = temp;
                     i++;
                     j--;
+                   
                     //this swaps the values checked and moves them into a more sorted order using a temp variable
                 }
+                count++;
             } while (i <= j);
 
             if (left < j)
